@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
 const cat=[
   {title:"Space",img:"./Frame.png"},
   {title:"History",img:"./Frame (1).png"},
@@ -18,8 +18,9 @@ const allcat=[
   {title:"Sports",img:"./Frame (2).png"}
 ]
 function App() {
+  const [route,setRoute]=useState('home')
   return (
-   <div className='App' >
+   route==='home' ?<div className='App' >
      <div className="rec-y"> 
       <div className="title">
         <div className='text'>Hello Kirat</div>
@@ -30,7 +31,7 @@ function App() {
       </div>
       <div className='grid'>
       {cat.map((item)=>{
-         return <div className='item'>
+         return <div className='item'  style={{cursor:'pointer'}} onClick={()=>{setRoute('quiz')}} >
           <div  className='text-small' >{item.title}</div>
           <img src={item.img} />
          </div>
@@ -40,14 +41,29 @@ function App() {
      <div className="explore">
      
      {allcat.map((item)=>{
-         return <div className='item-2'>
+         return <div className='item-2' style={{cursor:'pointer'}} onClick={()=>{setRoute('quiz')}}>
           <div  className='text-small' >{item.title}</div>
           <img src={item.img} />
          </div>
       })}
      </div>
-     </div>
+     </div>:<Quiz/>
   );
+}
+function Quiz(){
+  return (
+    <div className='App' >
+    <div className="rec-y"> 
+    <div className='ques-div'>
+    <div className='ques'>
+
+</div>
+    </div>
+   
+    </div>
+   
+    </div>
+  )
 }
 
 export default App;
