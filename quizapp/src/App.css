@@ -109,11 +109,47 @@ box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.10), 2px 1px 3px 0px rgba(0, 0, 0, 0
 }
 .ques{
   width: 350px;
- height: 250px;
+ height: 200px;
 position: absolute;
 top:50%;
- 
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
+ align-items: center;
   border-radius: 20px;
 background: #FFF;
 box-shadow: 0px 4px 4px 0px #FBECFF;
+}
+.title-ques{
+  color: #2B262D;
+text-align: center;
+font-family: Poppins;
+font-size: 19px;
+font-style: normal;
+font-weight: 900;
+line-height: normal;
+}
+.options{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 390px;
+  gap:10px;
+}
+.option{
+  border-radius: 15px;
+border: 2px solid #FFB504;
+background: #FFF;
+width: 240px;
+height: 48px;
+display: flex;
+font-size: 20px;
+font-style: normal;
+font-weight: 900;
+line-height: normal;
+ cursor: pointer;
+  justify-content: center;
+  align-items: center;
 }

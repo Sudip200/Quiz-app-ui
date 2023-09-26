@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 const cat=[
   {title:"Space",img:"./Frame.png"},
   {title:"History",img:"./Frame (1).png"},
@@ -18,7 +18,8 @@ const allcat=[
   {title:"Sports",img:"./Frame (2).png"}
 ]
 function App() {
-  const [route,setRoute]=useState('home')
+  const [route,setRoute]=useState('home');
+  const [cats,setCats]=useState('')
   return (
    route==='home' ?<div className='App' >
      <div className="rec-y"> 
@@ -31,7 +32,7 @@ function App() {
       </div>
       <div className='grid'>
       {cat.map((item)=>{
-         return <div className='item'  style={{cursor:'pointer'}} onClick={()=>{setRoute('quiz')}} >
+         return <div className='item'  style={{cursor:'pointer'}} onClick={()=>{setRoute('quiz');setCats(item.title)}} >
           <div  className='text-small' >{item.title}</div>
           <img src={item.img} />
          </div>
@@ -47,23 +48,110 @@ function App() {
          </div>
       })}
      </div>
-     </div>:<Quiz/>
+     </div>:<Quiz cat={cats}/>
   );
 }
-function Quiz(){
-  return (
-    <div className='App' >
-    <div className="rec-y"> 
-    <div className='ques-div'>
-    <div className='ques'>
+function Quiz({ cat }) {
+  const [data, setData] = useState({});
+  const [API, setAPI] = useState("");
+  const [no, setNo] = useState(0);
+  const [border,setBorder]=useState("")
+  const [myStyle, setMyStyle] = useState({});
+  const getCat = (cat) => {
+    if (cat === "Sports") {
+      setAPI("https://opentdb.com/api.php?amount=10&category=21");
+    } else if (cat === "Space") {
+      setAPI("https://opentdb.com/api.php?amount=10&category=17");
+    } else {
+      setAPI("https://opentdb.com/api.php?amount=10&category=23");
+    }
+  };
+  const handleClick = (id) => {
+    setMyStyle((prevState) => ({
+      ...myStyle,
+      [id]: !prevState[id],
+    }));
+  
+    setTimeout(() => {
+      let num = no;
+      num++;
+      setNo(num);
+    }, 3000); // Wait for 3 seconds (3000 milliseconds) before incrementing the number
+  };
+  
+  useEffect(() => {
+    getCat(cat);
+    fetch(API)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [API, cat]);
 
-</div>
+  return (
+    <div className="App">
+      <div className="rec-y">
+        <div className="ques-div">
+        <div
+              className="score"
+              style={{
+                width: "80px",
+                height: "80px",
+                borderRadius: "50%",
+                position:'absolute',
+               top:'40%',
+               zIndex:1,
+                
+                background: "white",
+              }}
+            >
+              {no}/20
+            </div>
+          <div className="ques">
+           
+            
+            <div className="title-ques" style={{width:'100%',display:'flex',justifyContent:'center'}}>
+              {data.results && data.results[no] ? data.results[no].question + " ?" : ""}
+            </div>
+            
+            
+            
+            
+          </div>
+          
+        </div>
+      </div>
+      <div className="options">
+              {data.results && data.results[no]
+                ? data.results[no].incorrect_answers.map((item,index) => {
+                    return <div className="option" id='option' key={index} style={{
+                      borderColor: myStyle[`${index}`] 
+                        ? "red" 
+                        : "#FFB504"
+                    }} onClick={() => handleClick(index)}
+                    >{item}</div>;
+                  })
+                : ""}
+                 <div  className="option" id="cr-option" onClick={()=>{
+                       document.getElementById("cr-option").style.borderColor="green";
+                       document.getElementById("cr-option").style.borderWidth="5px";
+
+                       setTimeout(() => {
+                        let num = no;
+                        num++;
+                        setNo(num);
+                      }, 3000);
+                    }}>{data.results && data.results[no] ? data.results[no].correct_answer : ""}</div> 
+            </div>
     </div>
-   
-    </div>
-   
-    </div>
-  )
+  );
 }
+
 
 export default App;
