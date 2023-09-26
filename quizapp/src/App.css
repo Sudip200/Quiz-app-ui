@@ -68,7 +68,7 @@ line-height: normal;
   flex-direction: column;
 }
 .explore{
- padding-top: 320px;
+ padding-top: 370px;
  width: 100%;
   display:grid;
   grid-template-columns: 91px 91px 91px;
@@ -152,4 +152,29 @@ line-height: normal;
  cursor: pointer;
   justify-content: center;
   align-items: center;
+}
+.my-score{
+  fill: rgba(255, 255, 255, 0.30);
+}
+.rec-yx{
+  width: 100%;
+  height: 300px;
+  background-color: hsla(45, 100%, 50%, 1);
+  border-radius: 40px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.st-row>div{
+  color: #FFC102;
+  
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
